@@ -1,0 +1,1 @@
+docker run -it --rm -w /app -v .:/app --name npm-cmd node npm %*
