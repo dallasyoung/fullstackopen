@@ -1,0 +1,1 @@
+docker build -f Dockerfile.prod -t fullstackopen-part1 . && docker run --rm -it -p 3000:3000 fullstackopen-part1

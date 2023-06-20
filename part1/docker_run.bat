@@ -1,1 +1,0 @@
-docker build -t fullstackopen-part1 . && docker run --rm -it -p 3000:3000 -v .:/app fullstackopen-part1
