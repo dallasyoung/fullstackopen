@@ -1,0 +1,1 @@
+docker run -it --rm -w /app -v .:/app --name npx-cmd node npx %*
