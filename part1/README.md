@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+## The files in this directory
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This directory contains a few additional Dockerfile and batch script templates
+used when learning from & working on the various parts & exercises. They're
+meant to be copied to each React project root you create and should only need
+minor tweaking for each different project/example
 
-## Available Scripts
+These files will probably be copied to each different part I work on and
+eventually will probably go live in some sort of external "scripts" or
+"utilities" folder
 
-In the project directory, you can run:
+## The two Dockerfiles
 
-### `npm start`
+Both Dockerfiles are based on the standard `node` image and run your project
+files from the `/app` directory. The dev & prod files differ in that the dev
+image does not contain any `COPY`d in project files - it's meant to have the
+current project directory bind-mounted to `/app` so you can make live changes
+to your project while developing. The prod image `COPY`s all project files to
+the actual image and separately installs all needed Node dependencies like an
+actual Docker project. This produces an actual image that you can push to a
+container registry and use to demo your project if you want
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# The two run scripts
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+To match the pair of Dockerfiles above are corresponding dev and prod batch
+scripts. Simply run either of these to build and launch an ephemeral container
+running your project. As outlined above, use dev when you're working, prod
+when you're building/deploying, obviously
 
-### `npm test`
+# Editing the scripts
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+When you start a new project and copy these files in, the only details that
+need to be updated are the `PROJECT_NAME` variables in both scripts. This value
+will be what your resulting container images are tagged as
 
-### `npm run build`
+# Using different git branches
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The smarter thing to do when setting up a new project would be to set up
+separate `dev` and `prod` branches in the repository and only check in the
+appropriate Dockerfile and run script to each branch. This would eliminate the
+dev/prod naming conventions and let the tools run as they were designed.
+Running things this way is left as an exercise for the reader. For now I need
+to get back to studying

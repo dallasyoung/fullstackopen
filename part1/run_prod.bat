@@ -1,1 +1,4 @@
-docker build -f Dockerfile.prod -t fullstackopen-part1 . && docker run --rm -it -p 3000:3000 fullstackopen-part1
+set PROJECT_NAME=fullstackopen-part1
+set DOCKERFILE=Dockerfile.prod
+
+docker build -f %DOCKERFILE% -t %PROJECT_NAME% . && docker run --rm -it -p 3000:3000 %PROJECT_NAME%
