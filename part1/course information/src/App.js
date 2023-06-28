@@ -1,9 +1,3 @@
-class PartData {
-  constructor(name, numExercises) {
-    this.name = name;
-    this.numExercises = numExercises;
-  }
-};
 
 const Header = ({course}) => (
   <div>
@@ -17,6 +11,8 @@ const Content = ({parts}) => {
   // I'm just sucking it up now that I have something that works
   // 
   // https://reactjs.org/link/warning-keys
+  // 
+  // Yes, I also now see the nota bene in exercise 1.4. Oops, oh well
   let ret = parts.map(data => {
     return(<Part data={data}/>);
   });
@@ -30,35 +26,39 @@ const Content = ({parts}) => {
 
 const Part = ({data}) => (
   <div>
-    <p>{data.name} {data.numExercises}</p>
+    <p>{data.name} {data.exercises}</p>
   </div>
 );
 
 const Total = ({parts}) => {
-  let sum = parts.reduce((accum, data) => accum += data.numExercises, 0);
+  let sum = parts.reduce((accum, data) => accum += data.exercises, 0);
   return(<p>Number of exercises {sum}</p>);
 };
 
 const App = () => {
-  const COURSE     = "Half Stack application development";
-  const PART1      = "Fundamentals of React";
-  const EXERCISES1 = 10;
-  const PART2      = "Using props to pass data";
-  const EXERCISES2 = 7;
-  const PART3      = "State of a component";
-  const EXERCISES3 = 14;
+  const COURSE = {
+    name: "Half Stack application development",
+    parts: [
+      {
+        name: "Fundamentals of React",
+        exercises: 10
+      },
+      {
+        name: "Using props to pass data",
+        exercises: 7
+      },
+      {
+        name: "State of a component",
+        exercises: 14
+      }
+    ]
+  };
   
-  const PARTS = [
-    new PartData(PART1, EXERCISES1),
-    new PartData(PART2, EXERCISES2),
-    new PartData(PART3, EXERCISES3)
-  ];
-
   return(
     <div>
-      <Header course={COURSE} />
-      <Content parts={PARTS} />
-      <Total parts={PARTS} />
+      <Header course={COURSE.name} />
+      <Content parts={COURSE.parts} />
+      <Total parts={COURSE.parts} />
     </div>
   )
 };
