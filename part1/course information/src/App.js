@@ -11,6 +11,8 @@ const Content = ({parts}) => {
   // I'm just sucking it up now that I have something that works
   // 
   // https://reactjs.org/link/warning-keys
+  // 
+  // Yes, I also now see the nota bene in exercise 1.4. Oops, oh well
   let ret = parts.map(data => {
     return(<Part data={data}/>);
   });
@@ -35,21 +37,22 @@ const Total = ({parts}) => {
 
 const App = () => {
   const COURSE = "Half Stack application development";
-  const PART1 = {
-    name: "Fundamentals of React",
-    exercises: 10
-  };
-  const PART2 = {
-    name: "Using props to pass data",
-    exercises: 7
-  };
-  const PART3 = {
-    name: "State of a component",
-    exercises: 14
-  };
+  // Whoops, I kinda did the bigger parts of this already
+  const PARTS = [
+    {
+      name: "Fundamentals of React",
+      exercises: 10
+    },
+    {
+      name: "Using props to pass data",
+      exercises: 7
+    },
+    {
+      name: "State of a component",
+      exercises: 14
+    }
+  ];
   
-  const PARTS = [PART1, PART2, PART3];
-
   return(
     <div>
       <Header course={COURSE} />
