@@ -18,7 +18,7 @@ const Content = ({parts}) => {
   // 
   // https://reactjs.org/link/warning-keys
   let ret = parts.map(data => {
-    return(<p>{data.name} {data.numExercises}</p>);
+    return(<Part data={data}/>);
   });
 
   return(
@@ -27,6 +27,12 @@ const Content = ({parts}) => {
     </div>
   );
 };
+
+const Part = ({data}) => (
+  <div>
+    <p>{data.name} {data.numExercises}</p>
+  </div>
+);
 
 const Total = ({parts}) => {
   let sum = parts.reduce((accum, data) => accum += data.numExercises, 0);
@@ -52,7 +58,7 @@ const App = () => {
     <div>
       <Header course={COURSE} />
       <Content parts={PARTS} />
-      <Total parts={PARTS}/>
+      <Total parts={PARTS} />
     </div>
   )
 };
