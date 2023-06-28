@@ -5,10 +5,6 @@ used when learning from & working on the various parts & exercises. They're
 meant to be copied to each React project root you create and should only need
 minor tweaking for each different project/example
 
-These files will probably be copied to each different part I work on and
-eventually will probably go live in some sort of external "scripts" or
-"utilities" folder
-
 ## The two Dockerfiles
 
 Both Dockerfiles are based on the standard `node` image and run your project
@@ -30,8 +26,8 @@ when you're building/deploying, obviously
 # Editing the scripts
 
 When you start a new project and copy these files in, the only details that
-need to be updated are the `PROJECT_NAME` variables in both scripts. This value
-will be what your resulting container images are tagged as
+should to be updated are the `PROJECT_NAME` variables in both scripts. This
+value will be what your resulting container images are tagged as
 
 # Using different git branches
 
@@ -39,5 +35,6 @@ The smarter thing to do when setting up a new project would be to set up
 separate `dev` and `prod` branches in the repository and only check in the
 appropriate Dockerfile and run script to each branch. This would eliminate the
 dev/prod naming conventions and let the tools run as they were designed.
-Running things this way is left as an exercise for the reader. For now I need
-to get back to studying
+Running things this way is left as an exercise for the reader (don't forget to
+also update the batch scripts' `DOCKERFILE` variable). For now I need to get
+back to studying
