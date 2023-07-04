@@ -24,19 +24,23 @@ const Statistics = ({stats}) => {
   const avg = (stats[0] - stats[2]) / all;
   const pos = (stats[0] / all) * 100;
 
-  return (
-    <div>
-      <h1>Statistics</h1>
-      <ul>
-        <StatItem text={"good: " + stats[0]} />
-        <StatItem text={"neutral: " + stats[1]} />
-        <StatItem text={"bad: " + stats[2]} />
-        <StatItem text={"all: " + all} />
-        <StatItem text={"average: " + avg} />
-        <StatItem text={"positive: " + pos} />
-      </ul>
-    </div>
+  if(all > 0) {
+    return (
+      <div>
+        <h1>Statistics</h1>
+        <ul>
+          <StatItem text={"good: " + stats[0]} />
+          <StatItem text={"neutral: " + stats[1]} />
+          <StatItem text={"bad: " + stats[2]} />
+          <StatItem text={"all: " + all} />
+          <StatItem text={"average: " + avg} />
+          <StatItem text={"positive: " + pos} />
+        </ul>
+      </div>
     );
+  } else {
+    return(<div><h1>Statistics</h1><p>No feedback given</p></div>);
+  }
 };
 
 const App = () => {
