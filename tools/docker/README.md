@@ -16,20 +16,20 @@ the actual image and separately installs all needed Node dependencies like an
 actual Docker project. This produces an actual image that you can push to a
 container registry and use to demo your project if you want
 
-# The two run scripts
+## The two run scripts
 
 To match the pair of Dockerfiles above are corresponding dev and prod batch
 scripts. Simply run either of these to build and launch an ephemeral container
 running your project. As outlined above, use dev when you're working, prod
 when you're building/deploying, obviously
 
-# Editing the scripts
+## Editing the scripts
 
 When you start a new project and copy these files in, the only details that
 should to be updated are the `PROJECT_NAME` variables in both scripts. This
 value will be what your resulting container images are tagged as
 
-# Using different git branches
+## Using different git branches
 
 The smarter thing to do when setting up a new project would be to set up
 separate `dev` and `prod` branches in the repository and only check in the
