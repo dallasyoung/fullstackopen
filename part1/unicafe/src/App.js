@@ -10,24 +10,41 @@ const Controls = ({stats, updateStats}) => (
   </div>
 );
 
+// 1.10 - Whoops, done!
 const Button = ({text, handler}) => (
   <>
     <button onClick={handler}>{text}</button>
   </>
 );
 
-const StatItem = ({text}) => (<li>{text}</li>);
+const StatisticLine = ({text, value}) => (<tr><td>{text}</td><td>{value}</td></tr>);
 
-const Statistics = ({stats}) => (
-  <div>
-    <h1>Statistics</h1>
-    <ul>
-      <StatItem text={"good: " + stats[0]} />
-      <StatItem text={"neutral: " + stats[1]} />
-      <StatItem text={"bad: " + stats[2]} />
-    </ul>
-  </div>
-);
+// 1.8 - Whoops, already took care of this
+const Statistics = ({stats}) => {
+  const all = (stats[0] + stats[1] + stats[2]);
+  const avg = (stats[0] - stats[2]) / all;
+  const pos = (stats[0] / all) * 100;
+
+  if(all > 0) {
+    return (
+      <div>
+        <h1>Statistics</h1>
+        <table>
+          <tbody>
+            <StatisticLine text={"good"} value={stats[0]} />
+            <StatisticLine text={"neutral"} value={stats[1]} />
+            <StatisticLine text={"bad"} value={stats[2]} />
+            <StatisticLine text={"all"} value={all} />
+            <StatisticLine text={"average"} value={avg} />
+            <StatisticLine text={"positive"} value={pos} />
+          </tbody>
+        </table>
+      </div>
+    );
+  } else {
+    return(<div><h1>Statistics</h1><p>No feedback given</p></div>);
+  }
+};
 
 const App = () => {
   // This is a dumb way of doing things and makes the event handling code more
