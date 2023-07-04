@@ -18,6 +18,7 @@ const Button = ({text, handler}) => (
 
 const StatItem = ({text}) => (<li>{text}</li>);
 
+// 1.8 - Whoops, already took care of this
 const Statistics = ({stats}) => {
   const all = (stats[0] + stats[1] + stats[2]);
   const avg = (stats[0] - stats[2]) / all;
