@@ -12,7 +12,11 @@ This exercise has been published as a container to Docker Hub and can be run
 with the following command:
 
 ```
-docker run -d milquetoast/fullstackopen-part1-courseinfo
+docker run -d -p 3000:8080 milquetoast/fullstackopen-part1-courseinfo
 ```
 
-Source code available on [Github](https://github.com/dallasyoung/fullstackopen)
+Then connect to `http://localhost:8080` in a web broswer
+
+## Source code 
+
+Available on [Github](https://github.com/dallasyoung/fullstackopen)
