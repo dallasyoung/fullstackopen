@@ -15,7 +15,7 @@ with the following command:
 docker run -d -p 8080:3000 milquetoast/fullstackopen-part1-courseinfo
 ```
 
-Then connect to `http://localhost:8080` in a web broswer
+Then connect to `http://localhost:8080` in a web browser
 
 ## Source code 
 
