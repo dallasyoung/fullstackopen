@@ -13,11 +13,20 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  // My solution before reading the hints included in the exercise instructions
+  // const [votes, updateVotes] = useState(Array(anecdotes.length).fill().map(_ => 0));
+  const [votes, updateVotes] = useState(new Uint8Array(anecdotes.length));
   
   const selectRandom = () => {
     const newRandomNumber = Math.floor(Math.random() * anecdotes.length);
     setSelected(newRandomNumber);
-  }
+  };
+
+  const vote = () => {
+    let newVotes = [...votes]; // Careful not to modify the 'votes' React state directly here
+    newVotes[selected] += 1;
+    updateVotes(newVotes);
+  };
 
   return (
     <div>
@@ -25,7 +34,11 @@ const App = () => {
         {anecdotes[selected]}
       </div>
       <div>
-        <button onClick={selectRandom}>Random anectode</button>
+        <p>Votes: {votes[selected]}</p>
+      </div>
+      <div>
+      <button onClick={selectRandom}>Random anectode</button>
+      <button onClick={vote}>Vote for anectode</button>
       </div>
     </div>
   );
