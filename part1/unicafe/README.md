@@ -10,7 +10,7 @@ This exercise has been published as a container to Docker Hub and can be run
 with the following command:
 
 ```
-docker run -d -p 3000:8080 milquetoast/fullstackopen-part1-unicafe
+docker run -d -p 8080:3000 milquetoast/fullstackopen-part1-unicafe
 ```
 
 Then connect to `http://localhost:8080` in a web broswer
