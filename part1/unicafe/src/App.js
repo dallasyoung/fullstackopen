@@ -10,13 +10,14 @@ const Controls = ({stats, updateStats}) => (
   </div>
 );
 
+// 1.10 - Whoops, done!
 const Button = ({text, handler}) => (
   <>
     <button onClick={handler}>{text}</button>
   </>
 );
 
-const StatItem = ({text}) => (<li>{text}</li>);
+const StatisticLine = ({text, value}) => (<tr><td>{text}</td><td>{value}</td></tr>);
 
 // 1.8 - Whoops, already took care of this
 const Statistics = ({stats}) => {
@@ -28,14 +29,16 @@ const Statistics = ({stats}) => {
     return (
       <div>
         <h1>Statistics</h1>
-        <ul>
-          <StatItem text={"good: " + stats[0]} />
-          <StatItem text={"neutral: " + stats[1]} />
-          <StatItem text={"bad: " + stats[2]} />
-          <StatItem text={"all: " + all} />
-          <StatItem text={"average: " + avg} />
-          <StatItem text={"positive: " + pos} />
-        </ul>
+        <table>
+          <tbody>
+            <StatisticLine text={"good"} value={stats[0]} />
+            <StatisticLine text={"neutral"} value={stats[1]} />
+            <StatisticLine text={"bad"} value={stats[2]} />
+            <StatisticLine text={"all"} value={all} />
+            <StatisticLine text={"average"} value={avg} />
+            <StatisticLine text={"positive"} value={pos} />
+          </tbody>
+        </table>
       </div>
     );
   } else {
