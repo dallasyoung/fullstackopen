@@ -8,8 +8,8 @@
 
 ## Running the code
 
-This exercise has been published as a container to Docker Hub and can be run
-with the following command:
+This exercise has been published as a container to [Docker Hub](https://hub.docker.com/r/milquetoast/fullstackopen-part1-courseinfo)
+and can be run with the following command:
 
 ```
 docker run -d -p 8080:3000 milquetoast/fullstackopen-part1-courseinfo
