@@ -1,0 +1,20 @@
+# Part 1 exercise - Unicafe
+
+## See the exercise descriptions
+
+  - [1.6 - 1.11](https://fullstackopen.com/en/part1/a_more_complex_state_debugging_react_apps#exercises-1-6-1-14)
+
+## Running the code
+
+This exercise has been published as a container to Docker Hub and can be run
+with the following command:
+
+```
+docker run -d -p 3000:8080 milquetoast/fullstackopen-part1-unicafe
+```
+
+Then connect to `http://localhost:8080` in a web broswer
+
+## Source code 
+
+Available on [Github](https://github.com/dallasyoung/fullstackopen)
