@@ -1,0 +1,1 @@
+docker run -it --rm -w /app -v .:/app -p 3001:3001 --name json-server node npx json-server --port 3001 --watch db.json --host 0.0.0.0
