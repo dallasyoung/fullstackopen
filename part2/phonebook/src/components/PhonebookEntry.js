@@ -1,6 +1,10 @@
-const PhonebookEntry = ({person}) => <>
+const PhonebookEntry = ({person, handleClick}) => <>
     <tr>
-        <td className="delete-icon">✗</td>
+        <td>
+            <button onClick={handleClick} className="delete-icon">
+                ✗
+            </button>
+        </td>
         <td>{person.name}</td>
         <td>({person.number})</td>
     </tr>

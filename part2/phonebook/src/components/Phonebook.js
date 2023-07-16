@@ -1,6 +1,6 @@
 import PhonebookEntry from "./PhonebookEntry";
 
-const Phonebook = ({filter, persons}) => {
+const Phonebook = ({filter, persons, delFunc}) => {
   const selectedPersons = filter ? 
     persons
     .filter(p => p
@@ -12,7 +12,7 @@ const Phonebook = ({filter, persons}) => {
 
   const genPhoneBookEntry = person => {
     const key=`${person.name}+${person.number}`;
-    return(<PhonebookEntry key={key} person={person} />);
+    return(<PhonebookEntry key={key} person={person} handleClick={() => delFunc(person.id)}/>);
   };
 
 
