@@ -27,24 +27,49 @@ const App = () => {
 
   const addPerson = event => {
     event.preventDefault();
-    const warnString = `${newNumber} is already added to phonebook`;
-    // Only checking number here because it makes sense that people could have
-    // multiple phone numbers
-    if(persons.map(p => p.number).includes(newNumber)) {
-      alert(warnString);
+    
+    // We are now checking for both existing names & numbers, as exercise 2.15*
+    // makes it clear a user can only have one valid number assigned and should
+    // be `PATCH`ed/`PUT`ted
+    const existingNumber = persons.find(p => (p.number === newNumber));
+    if(existingNumber) {
+      alert(`'${newNumber}' is already registered in phonebook by "${existingNumber.name}"`);
       return;
     }
 
-    const newPerson = {name: newName, number: newNumber};
-
-    personsService
-      .create(newPerson)
-      .then(p => {
-        setPersons(persons.concat(p));
-        setNewName("");
-        setNewNumber("");
-      })
-      .catch(error => console.error(`Failed to save '${newPerson.name} (${newPerson.number})' to the server!`, error));
+    // Three different outcomes here depending on DB state and user responses:
+    //  1. Existing user needs to be patched
+    //  2. Existing user should not be patched, entire operation is aborted
+    //  3. User doesn't exist needs to be created
+    const existingUser = persons.find(p => p.name === newName);
+    if(existingUser) {
+      if(window.confirm(`'${existingUser.name}' is already added to phonebook, replace the old number with a new one?`)){
+        // 1.
+        const updatedUser = { ...existingUser, number: newNumber };
+        personsService
+          .update(updatedUser.id, updatedUser)
+          .then(returnedUpdatedUser => {
+            setPersons(persons.map(p => p.id !== updatedUser.id ? p : returnedUpdatedUser));
+            setNewName("");
+            setNewNumber("");
+          })
+          .catch(error => console.error(`Failed to save '${updatedUser.name} (${updatedUser.number})' to the server!`, error));
+      } else {
+        // 2.
+        return;
+      }
+    } else {
+      // 3.
+      const newPerson = {name: newName, number: newNumber};
+      personsService
+        .create(newPerson)
+        .then(p => {
+          setPersons(persons.concat(p));
+          setNewName("");
+          setNewNumber("");
+        })
+        .catch(error => console.error(`Failed to save '${newPerson.name} (${newPerson.number})' to the server!`, error));
+    }
   };
 
   const delPerson = id => {
