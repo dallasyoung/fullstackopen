@@ -111,14 +111,14 @@ const App = () => {
         popInfoMsg(`Deleted '${target.name}'`)
       })
       .catch(error => {
-        popErrMsg(`Failed to delete '${target.name}' from server!`)
-        console.error(target, error);
-
-        // What's the best thing to do in this case? Remove the erroring user
-        // from the local `persons` state despite the underlying problems? Do
-        // nothing so the deletion failure is immediately obvious to the user?
-        // Or something else yet? I suspect the best answer may depend on your
-        // & your users' personal preferences...
+        if(error.response?.status === 404) {
+          popErrMsg(`'${target.name}' has already been removed from the server`);
+        } else if(error?.code === "ERR_NETWORK"){
+          popErrMsg("Connectivity to the server has been lost");
+        } else {
+          popErrMsg(`Failed to delete '${target.name}' from server!`)
+        }
+        console.error(error);
       })
   };
 
