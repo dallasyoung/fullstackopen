@@ -1,10 +1,11 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 
 import Header from "./components/Header";
 import SearchFilter from "./components/SearchFilter";
 import AddUserForm from "./components/AddUserForm";
 import Phonebook from "./components/Phonebook";
+
+import personsService from "./services/persons";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -13,9 +14,13 @@ const App = () => {
   const [filter, setFilter] = useState("");
   
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/persons")
-      .then((response) => setPersons(response.data));
+    personsService
+      .getAll()
+      .then(people => setPersons(people))
+      .catch(error => {
+        console.warn("Failed to retrieve people from database. Any changes made in this session will not be saved", error);
+        return [];
+      })
   }, []);
 
   const addPerson = event => {
@@ -30,15 +35,14 @@ const App = () => {
 
     const newPerson = {name: newName, number: newNumber};
 
-    axios
-      .post("http://localhost:3001/persons", newPerson)
-      .then(response => response.data)
+    personsService
+      .create(newPerson)
       .then(p => {
         setPersons(persons.concat(p));
         setNewName("");
         setNewNumber("");
       })
-      .catch(error => alert(`Failed to save '${newPerson.name} (${newPerson.number})' to the server!`));
+      .catch(error => console.error(`Failed to save '${newPerson.name} (${newPerson.number})' to the server!`, error));
   };
 
   const handleNameOnChange = event => setNewName(event.target.value);
