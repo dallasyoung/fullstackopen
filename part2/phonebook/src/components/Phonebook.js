@@ -19,9 +19,11 @@ const Phonebook = ({filter, persons}) => {
   const phonebookEntries = selectedPersons.map(p => genPhoneBookEntry(p));
 
   return(
-    <ul>
-      {phonebookEntries}
-    </ul>
+    <table>
+      <tbody>
+        {phonebookEntries}
+      </tbody>
+    </table>
   );
 };
 
