@@ -4,6 +4,8 @@ import Header from "./components/Header";
 import SearchFilter from "./components/SearchFilter";
 import AddUserForm from "./components/AddUserForm";
 import Phonebook from "./components/Phonebook";
+import InfoMessage from "./components/messages/InfoMessage";
+import ErrorMessage from "./components/messages/ErrorMessage";
 
 import personsService from "./services/persons";
 
@@ -14,6 +16,8 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filter, setFilter] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const [infoMsg, setInfoMsg] = useState("");
   
   useEffect(() => {
     personsService
@@ -25,6 +29,17 @@ const App = () => {
       })
   }, []);
 
+
+  const popInfoMsg = message => {
+    setInfoMsg(message);
+    setTimeout(() => setInfoMsg(""), 5000);
+  };
+
+  const popErrMsg = message => {
+    setErrMsg(message);
+    setTimeout(() => setErrMsg(""), 5000);
+  };
+
   const addPerson = event => {
     event.preventDefault();
     
@@ -33,7 +48,7 @@ const App = () => {
     // be `PATCH`ed/`PUT`ted
     const existingNumber = persons.find(p => (p.number === newNumber));
     if(existingNumber) {
-      alert(`'${newNumber}' is already registered in phonebook by "${existingNumber.name}"`);
+      popErrMsg(`'${newNumber}' is already registered in phonebook by "${existingNumber.name}"`);
       return;
     }
 
@@ -52,8 +67,12 @@ const App = () => {
             setPersons(persons.map(p => p.id !== updatedUser.id ? p : returnedUpdatedUser));
             setNewName("");
             setNewNumber("");
+            popInfoMsg(`Updated '${returnedUpdatedUser.name}'`);
           })
-          .catch(error => console.error(`Failed to save '${updatedUser.name} (${updatedUser.number})' to the server!`, error));
+          .catch(error => {
+            popErrMsg(`Failed to save '${updatedUser.name} (${updatedUser.number})' to the server!`);
+            console.error(error);
+          });
       } else {
         // 2.
         return;
@@ -67,8 +86,12 @@ const App = () => {
           setPersons(persons.concat(p));
           setNewName("");
           setNewNumber("");
+          popInfoMsg(`Added '${p.name}'`);
         })
-        .catch(error => console.error(`Failed to save '${newPerson.name} (${newPerson.number})' to the server!`, error));
+        .catch(error => {
+          popErrMsg(`Failed to save '${newPerson.name} (${newPerson.number})' to the server!`);
+          console.error(error);
+        });
     }
   };
 
@@ -83,9 +106,13 @@ const App = () => {
 
     personsService
       .del(id)
-      .then(() => setPersons(persons.filter(p => p.id !== id)))
+      .then(() => {
+        setPersons(persons.filter(p => p.id !== id));
+        popInfoMsg(`Deleted '${target.name}'`)
+      })
       .catch(error => {
-        console.error("Failed to delete person from server!", target, error);
+        popErrMsg(`Failed to delete '${target.name}' from server!`)
+        console.error(target, error);
 
         // What's the best thing to do in this case? Remove the erroring user
         // from the local `persons` state despite the underlying problems? Do
@@ -102,6 +129,8 @@ const App = () => {
   return (
     <div>
       <Header text="Phonebook" />
+      {infoMsg ? <InfoMessage message={infoMsg} /> : false}
+      {errMsg ? <ErrorMessage message={errMsg} /> : false}
       <SearchFilter filter={filter} handler={handleFilterOnChange} />
       <Header text="add a new" />
       <AddUserForm 
