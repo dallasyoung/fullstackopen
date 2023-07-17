@@ -24,7 +24,7 @@ const App = () => {
   return(
     <div>
       <Search query={query} handleQueryUpdate={handleQueryUpdate} />
-      <View query={query} countryData={countryData} />
+      <View query={query} countryData={countryData} setQuery={setQuery} />
     </div>
   );
 };
