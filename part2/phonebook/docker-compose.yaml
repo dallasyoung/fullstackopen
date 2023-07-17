@@ -1,0 +1,19 @@
+name: fullstackopen-part2-phonebook
+version: "3.10"
+services:
+  json-server:
+    image: clue/json-server
+    volumes:
+      - ./db.json:/data/db.json
+    ports:
+      - 8081:80
+  phonebook-web:
+    depends_on:
+      - json-server
+    build: .
+    volumes:
+      - .:/app
+    environment:
+      - REACT_APP_SERVER_PORT=8081
+    ports:
+      - 8080:3000
