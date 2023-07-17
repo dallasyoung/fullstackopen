@@ -10,9 +10,7 @@ services:
   phonebook-web:
     depends_on:
       - json-server
-    build: .
-    volumes:
-      - .:/app
+    image: milquetoast/fullstackopen-part2-phonebook
     environment:
       - REACT_APP_SERVER_PORT=8081
     ports:
