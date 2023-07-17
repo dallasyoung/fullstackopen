@@ -18,6 +18,19 @@ docker run -d -p 8080:3000 milquetoast/fullstackopen-part2-phonebook
 
 Then connect to `http://localhost:8080` in a web browser
 
+However, since this project relies on an external REST/DB server, simply
+running this image won't result in a functional app. You're much better off
+cloning the soure repository below and using `docker compose` to greatly
+simplify your setup. This will also pull and spin up a [mock JSON server](https://hub.docker.com/r/clue/json-server)
+that will allow the app to function properly. Otherwise, you're stuck setting
+this up on your own
+
+```
+git clone https://github.com/dallasyoung/fullstackopen
+cd fullstackopen/part2/phonebook
+docker compose up -d
+```
+
 ## Source code 
 
 Available on [Github](https://github.com/dallasyoung/fullstackopen)
