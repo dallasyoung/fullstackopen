@@ -1,0 +1,19 @@
+h1, h2 {
+    padding: 0;
+    margin: 0;
+}
+
+.countryCapital {
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+.countryArea {
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+.countryFlag {
+    font-size: 256px;
+    margin: 0;
+}
