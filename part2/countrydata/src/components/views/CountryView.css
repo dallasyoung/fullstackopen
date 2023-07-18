@@ -1,0 +1,39 @@
+.infoPanel {
+    display: inline-block;
+    width: 20%;
+}
+
+.infoPanel h1, .infoPanel h2 {
+    padding: 0;
+    margin: 0;
+}
+
+.countryCapital {
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+.countryArea {
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+.countryFlag {
+    font-size: 256px;
+    margin: 0;
+}
+
+.wikiPanel {
+    float: right;
+    width: 80%;
+}
+
+.wikiPanel embed {
+    width: 100%;
+    /* I'm certain this is the wrong solution for getting a floating div to */
+    /* take 100% of its parent's height, but I'm CSS illiterate and this is */
+    /* the only fix Google gave me                                          */
+    /*                                                                      */
+    /* CSS is evil >:(                                                      */
+    height: 100vh;
+}

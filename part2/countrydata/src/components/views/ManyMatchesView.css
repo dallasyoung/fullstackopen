@@ -1,0 +1,8 @@
+.manyMatches p {
+    display: inline;
+    margin-right: 10px;
+}
+
+.manyMatches li {
+    margin-bottom: 5px;
+}
