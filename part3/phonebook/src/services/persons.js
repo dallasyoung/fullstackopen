@@ -3,7 +3,7 @@ import axios from "axios";
 const server = process.env.REACT_APP_SERVER || "localhost";
 const port = process.env.REACT_APP_SERVER_PORT || 3001;
 
-const baseUrl = `http://${server}:${port}/persons`;
+const baseUrl = `http://${server}:${port}/api/persons`;
 
 const getAll = () => axios.get(baseUrl).then(response => response.data);
 

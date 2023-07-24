@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
+const cors = require("cors");
+app.use(cors());
+
 const morgan = require("morgan");
 morgan.token("postbody", (req, res) => JSON.stringify(req.body));
 const morganTiny = morgan("tiny");
@@ -66,7 +69,7 @@ app.post("/api/persons", (req, res) => {
 
     data = data.concat(newPerson);
 
-    res.status(204).end();
+    res.json(newPerson);
 });
 
 app.get("/api/persons", (_, res) => res.json(data));
