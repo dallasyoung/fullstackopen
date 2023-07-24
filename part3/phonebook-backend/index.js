@@ -3,19 +3,13 @@ const app = express();
 app.use(express.json());
 
 const morgan = require("morgan");
+morgan.token("postbody", (req, res) => JSON.stringify(req.body));
+const morganTiny = morgan("tiny");
+const morganCustom = morgan(`:method :url :status :res[content-length] - :response-time ms :postbody`);
 const morganShim = (req, res, next) => {
-    if(req.method === "POST") {
-        morgan((tokens, req, res) => [
-            tokens.method(req, res),
-            tokens.url(req, res),
-            tokens.status(req, res),
-            tokens.res(req, res, "content-length"), "-",
-            tokens["response-time"](req,res),
-            JSON.stringify(req.body)
-        ].join(" "))(req, res, next);
-    } else {
-        morgan("tiny")(req, res, next);
-    }
+    req.method === "POST" ?
+        morganCustom(req, res, next) :
+        morganTiny(req, res, next);
 };
 app.use(morganShim);
 
