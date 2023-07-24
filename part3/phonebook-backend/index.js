@@ -39,6 +39,13 @@ app.post("/api/persons", (req, res) => {
                 error: "missing content"
             });
     }
+    if(data.find(p => p.name == req.body.name)) {
+        return res
+            .status(400)
+            .json({
+                error: `'${req.body.name}' is already in phonebook`
+            });
+    }
 
     const newPerson = {
         id,
