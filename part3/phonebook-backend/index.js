@@ -32,7 +32,7 @@ app.post("/api/persons", (req, res) => {
         flag = true;
     } while (data.find(p => p.id === id));
 
-    if(!req.body.content) {
+    if(!req.body.name || !req.body.number) {
         return res
             .status(400)
             .json({
@@ -42,8 +42,8 @@ app.post("/api/persons", (req, res) => {
 
     const newPerson = {
         id,
-        content: req.body.content,
-        important: req.body.important || false
+        name: req.body.name,
+        number: req.body.number,
     };
 
     data = data.concat(newPerson);
