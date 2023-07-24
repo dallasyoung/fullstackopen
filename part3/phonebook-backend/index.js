@@ -25,6 +25,32 @@ let data = [
     }
 ];
 
+app.post("/api/persons", (req, res) => {
+    let id = undefined
+    do {
+        id = Math.floor(Math.random()*1_000);
+        flag = true;
+    } while (data.find(p => p.id === id));
+
+    if(!req.body.content) {
+        return res
+            .status(400)
+            .json({
+                error: "missing content"
+            });
+    }
+
+    const newPerson = {
+        id,
+        content: req.body.content,
+        important: req.body.important || false
+    };
+
+    data = data.concat(newPerson);
+
+    res.status(204).end();
+});
+
 app.get("/api/persons", (_, res) => res.json(data));
 
 app.get("/api/persons/:id", (req, res) => {
