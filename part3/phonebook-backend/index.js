@@ -27,6 +27,12 @@ const data = [
 
 app.get("/api/persons", (_, res) => res.json(data));
 
+app.get("/info", (_, res) => {
+    const info_message = `<p>Phonebook has info for ${data.length} people<p>`;
+    const date_message = `<p>${new Date()}</p>`;
+    res.send(`${info_message}${date_message}`);
+});
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Express server running on port ${PORT}`);
