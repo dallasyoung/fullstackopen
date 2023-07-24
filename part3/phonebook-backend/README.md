@@ -24,3 +24,7 @@ frontend you can use to access this Express server
 ## Source code 
 
 Available on [Github](https://github.com/dallasyoung/fullstackopen)
+
+## Live service
+
+Per exercise 3.10, this backend has been deployed as a live service to [render.com](https://dallasyoung-fullstackopen-part3.onrender.com/api/persons)
