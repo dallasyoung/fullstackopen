@@ -3,7 +3,21 @@ const app = express();
 app.use(express.json());
 
 const morgan = require("morgan");
-app.use(morgan("tiny"));
+const morganShim = (req, res, next) => {
+    if(req.method === "POST") {
+        morgan((tokens, req, res) => [
+            tokens.method(req, res),
+            tokens.url(req, res),
+            tokens.status(req, res),
+            tokens.res(req, res, "content-length"), "-",
+            tokens["response-time"](req,res),
+            JSON.stringify(req.body)
+        ].join(" "))(req, res, next);
+    } else {
+        morgan("tiny")(req, res, next);
+    }
+};
+app.use(morganShim);
 
 let data = [
     { 
