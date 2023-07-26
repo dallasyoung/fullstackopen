@@ -1,4 +1,5 @@
 @echo off
+goto INIT
 
 :VARIABLES
 @REM These are mandatory
@@ -14,6 +15,25 @@ set HOST_PORT=3001
 @REM set NPM_ARGS="Some other cmd + args"
 @REM set NPM_ARGS_DEV="Some other cmd + args"
 @REM set ENVIRONMENT_CFG=-e DOCKER_VAR_1=localhost -e DOCKER_VAR_2=3000
+
+goto TESTS
+
+:INIT
+set DEV_MODE=
+set PROJECT_NAME=
+set DOCKER_PORT=
+set HOST_PORT=
+set NPM_ARGS_PROD 
+set NPM_ARGS_DEV=
+set NPM_ARGS=
+set EPHEMERAL=
+set NETWORK_CFG=
+set VOLUME_CFG=
+set ENVIRONMENT_CFG=
+set DOCKERFILE=
+set BUILD=
+set RUN=
+goto VARIABLES
 
 :TESTS
 :and

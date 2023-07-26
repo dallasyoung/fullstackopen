@@ -1,4 +1,5 @@
 @echo off
+goto INIT
 
 :VARIABLES
 @REM These are mandatory
@@ -13,6 +14,24 @@ set DOCKER_PORT=3001
 set HOST_PORT=3001
 @REM set NPM_ARGS="Some other cmd + args"
 @REM set NPM_ARGS_DEV="Some other cmd + args"
+
+goto TESTS
+
+:INIT
+set DEV_MODE=
+set PROJECT_NAME=
+set DOCKER_PORT=
+set HOST_PORT=
+set NPM_ARGS_PROD 
+set NPM_ARGS_DEV=
+set NPM_ARGS=
+set EPHEMERAL=
+set NETWORK_CFG=
+set VOLUME_CFG=
+set DOCKERFILE=
+set BUILD=
+set RUN=
+goto VARIABLES
 
 :TESTS
 :and
@@ -76,19 +95,19 @@ set RUN=docker run -it %EPHEMERAL% %VOLUME_CFG% %NETWORK_CFG% %PROJECT_NAME%
 
 :DEBUG
 @REM Uncomment these as necessary
-@REM echo DEV_MODE      = %DEV_MODE%
-@REM echo PROJECT_NAME  = %PROJECT_NAME%
-@REM echo DOCKER_PORT   = %DOCKER_PORT%
-@REM echo HOST_PORT     = %HOST_PORT%
-@REM echo NPM_ARGS_PROD = %NPM_ARGS_PROD%
-@REM echo NPM_ARGS_DEV  = %NPM_ARGS_DEV%
-@REM echo NPM_ARGS      = %NPM_ARGS%
-@REM echo EPHEMERAL     = %EPHEMERAL%
-@REM echo NETWORK_CFG   = %NETWORK_CFG%
-@REM echo VOLUME_CFG    = %VOLUME_CFG%
-@REM echo DOCKERFILE    = %DOCKERFILE%
-@REM echo BUILD         = %BUILD%
-@REM echo RUN           = %RUN%
+echo DEV_MODE      = %DEV_MODE%
+echo PROJECT_NAME  = %PROJECT_NAME%
+echo DOCKER_PORT   = %DOCKER_PORT%
+echo HOST_PORT     = %HOST_PORT%
+echo NPM_ARGS_PROD = %NPM_ARGS_PROD%
+echo NPM_ARGS_DEV  = %NPM_ARGS_DEV%
+echo NPM_ARGS      = %NPM_ARGS%
+echo EPHEMERAL     = %EPHEMERAL%
+echo NETWORK_CFG   = %NETWORK_CFG%
+echo VOLUME_CFG    = %VOLUME_CFG%
+echo DOCKERFILE    = %DOCKERFILE%
+echo BUILD         = %BUILD%
+echo RUN           = %RUN%
 
 :EXECUTE
 %BUILD%
