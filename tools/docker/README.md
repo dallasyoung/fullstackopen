@@ -39,13 +39,14 @@ your resulting container images are tagged as. Additionally there are a few
 other variables you can tweak to your liking described below, though none are
 required. To disable/enable an option, simply comment its line out
 
-VARIABLE    | Description
-------------|------------
-`EPHEMERAL`   | Determines whether the container that is run is automatically deleted after it is stopped
-`DOCKER_PORT` | The port that the app listens on in the actual code/container. This is `EXPOSE`d in the docker image, and your code can use this value via Node's `process.env.PORT` variable. If your code does not or can not use this value, you must manually set this by hand. If left empty, this port will default to the `HOST_PORT` defined below
-`HOST_PORT`   | The port that will be mapped on your host machine. This is the one you will connect to in a web browser. If both this port and `DOCKER_PORT` above are both empty, no ports will be `EXPOSE`d in the Dockerfiles and there will be no ports published by the resulting container. If this port is left empty but `DOCKER_PORT` is defined, this is just a misconfiguration by you, and your networking will just not work
-`NPM_ARGS`    | In case you define any custom scripts in your `package.json`, you can set this value to run the resulting NPM command in a container. This variable affects *Production* builds only. Defaults to `"start"` when left undefined
+VARIABLE          | Description
+------------------|------------
+`EPHEMERAL`       | Determines whether the container that is run is automatically deleted after it is stopped
+`DOCKER_PORT`     | The port that the app listens on in the actual code/container. This is `EXPOSE`d in the docker image, and your code can use this value via Node's `process.env.PORT` variable. If your code does not or can not use this value, you must manually set this by hand. If left empty, this port will default to the `HOST_PORT` defined below
+`HOST_PORT`       | The port that will be mapped on your host machine. This is the one you will connect to in a web browser. If both this port and `DOCKER_PORT` above are both empty, no ports will be `EXPOSE`d in the Dockerfiles and there will be no ports published by the resulting container. If this port is left empty but `DOCKER_PORT` is defined, this is just a misconfiguration by you, and your networking will just not work
+`NPM_ARGS`        | In case you define any custom scripts in your `package.json`, you can set this value to run the resulting NPM command in a container. This variable affects *Production* builds only. Defaults to `"start"` when left undefined
 `NPM_ARGS_DEV`    | Exactly the same as above, but affects *Dev* builds only. Defaults to `run dev` if left undefined. **Ignored if `NPM_ARGS` is left blank** (eg. to define a custome dev command only, you still must specify `NPM_ARGS="start"` above)
+`ENVIRONMENT_CFG` | Environment variables passed to the Docker container that is run by the script
 
 ## Using different git branches
 
