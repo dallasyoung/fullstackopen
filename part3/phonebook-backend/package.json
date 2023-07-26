@@ -1,0 +1,32 @@
+{
+  "name": "phonebook-backend",
+  "version": "0.0.1",
+  "description": "My implementation of [FullstackOpen's part3 exercise 'Phonebook Backend'](https://fullstackopen.com/en/part3/node_js_and_express#exercises-3-1-3-6)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon -L index.js",
+    "build:ui": "echo 'I\\'m not implementing this script because of the mounted Docker setup I\\'ve been using throughout this course. This seems like kind of a not-ideal way to be doing this, but if this is something we will continue to do throughout the course, I will implement something equivalent in \\`/tools/scripts\\` or something. For now I\\'ll just be copying build folders by hand"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dallasyoung/fullstackopen.git"
+  },
+  "keywords": [
+    "fullstackopen"
+  ],
+  "author": "Dallas Young <dallasyoung@outlook.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dallasyoung/fullstackopen/issues"
+  },
+  "homepage": "https://github.com/dallasyoung/fullstackopen#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

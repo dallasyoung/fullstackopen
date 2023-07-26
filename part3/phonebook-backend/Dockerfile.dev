@@ -1,0 +1,15 @@
+FROM node:alpine
+
+ARG port
+ARG npm_args
+
+ENV PORT=${port}
+ENV RUN_CMD="npm ${npm_args}"
+
+VOLUME [ "/app" ]
+
+EXPOSE ${PORT}
+
+WORKDIR /app
+
+CMD ${RUN_CMD}
