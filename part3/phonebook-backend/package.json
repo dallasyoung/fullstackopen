@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon -L index.js"
+    "dev": "nodemon -L index.js",
+    "build:ui": "echo 'I\\'m not implementing this script because of the mounted Docker setup I\\'ve been using throughout this course. This seems like kind of a not-ideal way to be doing this, but if this is something we will continue to do throughout the course, I will implement something equivalent in \\`/tools/scripts\\` or something. For now I\\'ll just be copying build folders by hand"
   },
   "repository": {
     "type": "git",

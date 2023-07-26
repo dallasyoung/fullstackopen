@@ -13,6 +13,7 @@ set DOCKER_PORT=3000
 set HOST_PORT=3000
 @REM set NPM_ARGS="Some other cmd + args"
 @REM set NPM_ARGS_DEV="Some other cmd + args"
+set ENVIRONMENT_CFG=-e REACT_APP_API_SERVER_ADDRESS=localhost -e REACT_APP_API_SERVER_PORT=3001
 
 :TESTS
 :and
@@ -72,23 +73,24 @@ if defined EPHEMERAL (
 
 :COMMANDS
 set BUILD=docker build -f %DOCKERFILE% -t %PROJECT_NAME% --build-arg port=%DOCKER_PORT% --build-arg npm_args=%NPM_ARGS% .
-set RUN=docker run -it %EPHEMERAL% %VOLUME_CFG% %NETWORK_CFG% %PROJECT_NAME%
+set RUN=docker run -it %EPHEMERAL% %VOLUME_CFG% %NETWORK_CFG% %ENVIRONMENT_CFG% %PROJECT_NAME%
 
 :DEBUG
 @REM Uncomment these as necessary
-@REM echo DEV_MODE      = %DEV_MODE%
-@REM echo PROJECT_NAME  = %PROJECT_NAME%
-@REM echo DOCKER_PORT   = %DOCKER_PORT%
-@REM echo HOST_PORT     = %HOST_PORT%
-@REM echo NPM_ARGS_PROD = %NPM_ARGS_PROD%
-@REM echo NPM_ARGS_DEV  = %NPM_ARGS_DEV%
-@REM echo NPM_ARGS      = %NPM_ARGS%
-@REM echo EPHEMERAL     = %EPHEMERAL%
-@REM echo NETWORK_CFG   = %NETWORK_CFG%
-@REM echo VOLUME_CFG    = %VOLUME_CFG%
-@REM echo DOCKERFILE    = %DOCKERFILE%
-@REM echo BUILD         = %BUILD%
-@REM echo RUN           = %RUN%
+@REM echo DEV_MODE        = %DEV_MODE%
+@REM echo PROJECT_NAME    = %PROJECT_NAME%
+@REM echo DOCKER_PORT     = %DOCKER_PORT%
+@REM echo HOST_PORT       = %HOST_PORT%
+@REM echo NPM_ARGS_PROD   = %NPM_ARGS_PROD%
+@REM echo NPM_ARGS_DEV    = %NPM_ARGS_DEV%
+@REM echo NPM_ARGS        = %NPM_ARGS%
+@REM echo EPHEMERAL       = %EPHEMERAL%
+@REM echo NETWORK_CFG     = %NETWORK_CFG%
+@REM echo VOLUME_CFG      = %VOLUME_CFG%
+@REM echo ENVIRONMENT_CFG = %ENVIRONMENT_CFG%
+@REM echo DOCKERFILE      = %DOCKERFILE%
+@REM echo BUILD           = %BUILD%
+@REM echo RUN             = %RUN%
 
 :EXECUTE
 %BUILD%

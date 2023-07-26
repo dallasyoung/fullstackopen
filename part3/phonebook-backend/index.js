@@ -16,6 +16,8 @@ const morganShim = (req, res, next) => {
 };
 app.use(morganShim);
 
+app.use(express.static("build"));
+
 let data = [
     { 
       "id": 1,
