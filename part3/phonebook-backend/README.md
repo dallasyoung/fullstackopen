@@ -12,7 +12,7 @@ This exercise has been published as a container to [Docker Hub](https://hub.dock
 and can be run with the following command:
 
 ```
-docker run -d -p 8080:3000 milquetoast/fullstackopen-part3-phonebook-backend
+docker run -d -p 8080:3001 milquetoast/fullstackopen-part3-phonebook-backend
 ```
 
 Then connect to `http://localhost:8080` in a web browser. Despite the container
