@@ -12,14 +12,12 @@ This exercise has been published as a container to [Docker Hub](https://hub.dock
 and can be run with the following command:
 
 ```
-docker run -d -p 8081:3000 milquetoast/fullstackopen-part3-phonebook-backend
+docker run -d -p 8080:3000 milquetoast/fullstackopen-part3-phonebook-backend
 ```
 
-Then connect to `http://localhost:8081` in a web browser
-
-Note that this is just a backend option to the `phonebook` app we built in [part2](https://github.com/dallasyoung/fullstackopen/tree/master/part2/phonebook).
-You might consider running this app in a separate container so you have a nice
-frontend you can use to access this Express server
+Then connect to `http://localhost:8080` in a web browser. Despite the container
+& project's name, this container also hosts a [React frontend app](https://hub.docker.com/r/milquetoast/fullstackopen-part3-phonebook)
+that will allow you to access this backend project
 
 ## Source code 
 
@@ -27,4 +25,4 @@ Available on [Github](https://github.com/dallasyoung/fullstackopen)
 
 ## Live service
 
-Per exercise 3.10, this backend has been deployed as a live service to [render.com](https://dallasyoung-fullstackopen-part3.onrender.com/api/persons)
+Per exercise 3.10 & 3.11, this backend has been deployed as a live service to [render.com](https://dallasyoung-fullstackopen-part3.onrender.com)
