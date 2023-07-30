@@ -6,7 +6,7 @@
 
 ## Prerequisites
   - `git`
-  - `docker`
+  - `node.js`
 
 ## Running the code
 
