@@ -1,0 +1,22 @@
+{
+  "name": "phonebook-cli",
+  "version": "0.0.1",
+  "description": "Implementation of the FullStackOpen part 3 exercise \"Command-line database\"",
+  "main": "mongo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dallasyoung/fullstackopen.git"
+  },
+  "author": "Dallas Young <dallasyoung@outlook.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dallasyoung/fullstackopen/issues"
+  },
+  "homepage": "https://github.com/dallasyoung/fullstackopen#readme",
+  "dependencies": {
+    "mongoose": "^7.4.1"
+  }
+}
