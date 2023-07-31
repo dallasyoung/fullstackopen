@@ -14,6 +14,7 @@ set DOCKER_PORT=3001
 set HOST_PORT=3001
 @REM set NPM_ARGS="Some other cmd + args"
 @REM set NPM_ARGS_DEV="Some other cmd + args"
+set ENVIRONMENT_CFG=-e MONGO_SERVER_URL="<Mongo Atlase url here>"
 
 goto TESTS
 
