@@ -3,6 +3,7 @@ const Person = require("./models/person");
 const express = require("express");
 const app = express();
 app.use(express.json());
+app.use(express.static("build"));
 
 const cors = require("cors");
 app.use(cors());
@@ -18,9 +19,7 @@ const morganShim = (req, res, next) => {
 };
 app.use(morganShim);
 
-app.use(express.static("build"));
-
-app.post("/api/persons", (req, res) => {
+app.post("/api/persons", (req, res, next) => {
     if(!req.body.name || !req.body.number) {
         return res
             .status(400)
@@ -34,41 +33,57 @@ app.post("/api/persons", (req, res) => {
     });
     newPerson
         .save()
-        .then(() => res.json(newPerson));
-    });
+        .then(() => res.json(newPerson))
+        .catch(error => next(error));
+});
 
-app.get("/api/persons", (_, res) => {
+app.get("/api/persons", (_, res, next) => {
     Person
         .find({})
         .then(people => res.json(people))
+        .catch(error => next(error));
 });
 
-app.get("/api/persons/:id", (req, res) => {
-    const id = Number(req.params.id);
-    const person = data.find(person => person.id === id);
-    if(person) {
-        return res.json(person);
-    } else {
-        return res
-            .status(404)
-            .json({
-                error: `person '${id}' doesn't exist`
-            });
-    }
+app.get("/api/persons/:id", (req, res, next) => {
+    Person
+        .findById(req.params.id)
+        .then(person => {
+            if (person) {
+                res.json(person)
+            } else {
+                res.status(400).json({ error: "No such person" });
+            }
+        })
+        .catch(error => next(error));
 });
 
-app.delete("/api/persons/:id", (req, res) => {
+app.delete("/api/persons/:id", (req, res, next) => {
     Person
         .findByIdAndRemove(req.params.id)
         .then(() => res.status(204).end())
-        .catch(error => console.error(error.message));
+        .catch(error => next(error));
 });
 
-app.get("/info", (_, res) => {
-    const info_message = `<p>Phonebook has info for ${data.length} people<p>`;
-    const date_message = `<p>${new Date()}</p>`;
-    res.send(`${info_message}${date_message}`);
+app.get("/info", (_, res, next) => {
+    Person
+        .find({})
+        .then(people => {
+            const info_message = `<p>Phonebook has info for ${people.length} people<p>`;
+            const date_message = `<p>${new Date()}</p>`;
+            res.send(`${info_message}${date_message}`);
+        })
+        .catch(error => next(error));
 });
+
+const errorHandler = (error, req, res, next) => {
+    if(error.name === "CastError") {
+        return res.json({ error: "Malformed person ID" });
+    }
+   
+    console.error(error);
+    next(error);
+};
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
