@@ -21,12 +21,6 @@ app.use(morganShim);
 app.use(express.static("build"));
 
 app.post("/api/persons", (req, res) => {
-    let id = undefined
-    do {
-        id = Math.floor(Math.random()*1_000);
-        flag = true;
-    } while (data.find(p => p.id === id));
-
     if(!req.body.name || !req.body.number) {
         return res
             .status(400)
@@ -34,24 +28,14 @@ app.post("/api/persons", (req, res) => {
                 error: "missing content"
             });
     }
-    if(data.find(p => p.name == req.body.name)) {
-        return res
-            .status(400)
-            .json({
-                error: `'${req.body.name}' is already in phonebook`
-            });
-    }
-
-    const newPerson = {
-        id,
+    let newPerson = new Person({
         name: req.body.name,
         number: req.body.number,
-    };
-
-    data = data.concat(newPerson);
-
-    res.json(newPerson);
-});
+    });
+    newPerson
+        .save()
+        .then(() => res.json(newPerson));
+    });
 
 app.get("/api/persons", (_, res) => {
     Person
