@@ -58,12 +58,10 @@ app.get("/api/persons/:id", (req, res) => {
 });
 
 app.delete("/api/persons/:id", (req, res) => {
-    const id = Number(req.params.id);
-    const person = data.find(person => person.id === id);
-    if(person) {
-        data = data.filter(person => person.id !== id);
-    }
-    res.status(204).end();
+    Person
+        .findByIdAndRemove(req.params.id)
+        .then(() => res.status(204).end())
+        .catch(error => console.error(error.message));
 });
 
 app.get("/info", (_, res) => {
