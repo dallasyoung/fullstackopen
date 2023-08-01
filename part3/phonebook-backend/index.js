@@ -1,6 +1,9 @@
+const Person = require("./models/person");
+
 const express = require("express");
 const app = express();
 app.use(express.json());
+app.use(express.static("build"));
 
 const cors = require("cors");
 app.use(cors());
@@ -16,38 +19,62 @@ const morganShim = (req, res, next) => {
 };
 app.use(morganShim);
 
-app.use(express.static("build"));
-
-let data = [
-    { 
-      "id": 1,
-      "name": "Arto Hellas", 
-      "number": "040-123456"
-    },
-    { 
-      "id": 2,
-      "name": "Ada Lovelace", 
-      "number": "39-44-5323523"
-    },
-    { 
-      "id": 3,
-      "name": "Dan Abramov", 
-      "number": "12-43-234345"
-    },
-    { 
-      "id": 4,
-      "name": "Mary Poppendieck", 
-      "number": "39-23-6423122"
+app.post("/api/persons", async (req, res, next) => {
+    // This took WAY too long to do ...
+    if(!req.body.name || !req.body.number) {
+        return next({name: "MissingContentError"});
     }
-];
 
-app.post("/api/persons", (req, res) => {
-    let id = undefined
-    do {
-        id = Math.floor(Math.random()*1_000);
-        flag = true;
-    } while (data.find(p => p.id === id));
+    let nameError = await Person
+        .find({name: req.body.name})
+        .then((people) => people.length > 0 ? { name: "NameAlreadyExistsError"} : null)
+        .catch(error => next(error));
+    if(nameError) { return next(nameError); }
+    let numberError = await Person
+        .find({number: req.body.number})
+        .then((people) => people.length > 0 ? { name: "NumberAlreadyExistsError"} : null)
+        .catch(error => next(error));
+    if(numberError) { return next(numberError); }
+    
+    let newPerson = new Person({
+        name: req.body.name,
+        number: req.body.number,
+    });
+    newPerson
+        .save()
+        .then(() => res.json(newPerson))
+        .catch(error => next(error));
+});
 
+app.get("/api/persons", (_, res, next) => {
+    Person
+        .find({})
+        .then(people => res.json(people))
+        .catch(error => next(error));
+});
+
+// Whoops, already took care of this
+app.get("/api/persons/:id", (req, res, next) => {
+    Person
+        .findById(req.params.id)
+        .then(person => {
+            if (person) {
+                res.json(person)
+            } else {
+                res.status(400).json({ error: "No such person" });
+            }
+        })
+        .catch(error => next(error));
+});
+
+app.delete("/api/persons/:id", (req, res, next) => {
+    Person
+        .findByIdAndRemove(req.params.id)
+        .then(() => res.status(204).end())
+        .catch(error => next(error));
+});
+
+app.put("/api/persons/:id", (req, res, next) => {
     if(!req.body.name || !req.body.number) {
         return res
             .status(400)
@@ -55,55 +82,45 @@ app.post("/api/persons", (req, res) => {
                 error: "missing content"
             });
     }
-    if(data.find(p => p.name == req.body.name)) {
-        return res
-            .status(400)
-            .json({
-                error: `'${req.body.name}' is already in phonebook`
-            });
+    Person
+        .findByIdAndUpdate(req.params.id, {name: req.body.name, number: req.body.number}, {new: true, runValidators: true})
+        .then(updatedPerson => res.json(updatedPerson))
+        .catch(error => next(error));
+});
+
+// Whoops, already took care of this
+app.get("/info", (_, res, next) => {
+    Person
+        .find({})
+        .then(people => {
+            const info_message = `<p>Phonebook has info for ${people.length} people<p>`;
+            const date_message = `<p>${new Date()}</p>`;
+            res.send(`${info_message}${date_message}`);
+        })
+        .catch(error => next(error));
+});
+
+const errorHandler = (error, req, res, next) => {
+    if(error.name === "CastError") {
+        return res.status(400).json({ error: "Malformed person ID" });
     }
-
-    const newPerson = {
-        id,
-        name: req.body.name,
-        number: req.body.number,
-    };
-
-    data = data.concat(newPerson);
-
-    res.json(newPerson);
-});
-
-app.get("/api/persons", (_, res) => res.json(data));
-
-app.get("/api/persons/:id", (req, res) => {
-    const id = Number(req.params.id);
-    const person = data.find(person => person.id === id);
-    if(person) {
-        return res.json(person);
-    } else {
-        return res
-            .status(404)
-            .json({
-                error: `person '${id}' doesn't exist`
-            });
+    if(error.name === "MissingContentError") {
+        return res.status(400).json({ error: "Missing content"});
     }
-});
-
-app.delete("/api/persons/:id", (req, res) => {
-    const id = Number(req.params.id);
-    const person = data.find(person => person.id === id);
-    if(person) {
-        data = data.filter(person => person.id !== id);
+    if(error.name === "NameAlreadyExistsError") {
+        return res.status(400).json({ error: "User already exists" });
     }
-    res.status(204).end();
-});
-
-app.get("/info", (_, res) => {
-    const info_message = `<p>Phonebook has info for ${data.length} people<p>`;
-    const date_message = `<p>${new Date()}</p>`;
-    res.send(`${info_message}${date_message}`);
-});
+    if(error.name === "NumberAlreadyExistsError") {
+        return res.status(400).json({ error: "Number already exists" });
+    }
+    if(error.name === "ValidationError") {
+        return res.status(400).json({ error: error.message });
+    }
+   
+    console.error(error);
+    next(error);
+};
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
