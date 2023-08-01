@@ -15,7 +15,12 @@ const personSchema = mongoose.Schema({
     },
     number: {
         type: String,
-        required: true
+        minLength: 9,
+        required: true,
+        validate: {
+            validator: (v) => /^\d{1,3}-\d+$/.test(v),
+            message: props => `${props.value} is an invalid number. Numbers must be at least 8 digits long with the first two or three digits separated by '-'`,
+        }
     }
 });
 personSchema.set("toJSON", {
