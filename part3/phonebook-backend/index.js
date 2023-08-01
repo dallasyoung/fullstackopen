@@ -83,7 +83,7 @@ app.put("/api/persons/:id", (req, res, next) => {
             });
     }
     Person
-        .findByIdAndUpdate(req.params.id, {name: req.body.name, number: req.body.number}, {new: true})
+        .findByIdAndUpdate(req.params.id, {name: req.body.name, number: req.body.number}, {new: true, runValidators: true})
         .then(updatedPerson => res.json(updatedPerson))
         .catch(error => next(error));
 });
@@ -112,6 +112,9 @@ const errorHandler = (error, req, res, next) => {
     }
     if(error.name === "NumberAlreadyExistsError") {
         return res.status(400).json({ error: "Number already exists" });
+    }
+    if(error.name === "ValidationError") {
+        return res.status(400).json({ error: error.message });
     }
    
     console.error(error);

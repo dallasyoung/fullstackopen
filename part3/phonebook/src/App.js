@@ -70,7 +70,7 @@ const App = () => {
             popInfoMsg(`Updated '${returnedUpdatedUser.name}'`);
           })
           .catch(error => {
-            popErrMsg(`Failed to save '${updatedUser.name} (${updatedUser.number})' to the server!`);
+            popErrMsg(`Failed to save '${updatedUser.name} (${updatedUser.number})': ${error.message}`);
             console.error(error);
           });
       } else {
@@ -89,7 +89,7 @@ const App = () => {
           popInfoMsg(`Added '${p.name}'`);
         })
         .catch(error => {
-          popErrMsg(`Failed to save '${newPerson.name} (${newPerson.number})' to the server!`);
+          popErrMsg(`Failed to save '${newPerson.name} (${newPerson.number})': ${error.message}`);
           console.error(error);
         });
     }
@@ -116,7 +116,7 @@ const App = () => {
         } else if(error?.code === "ERR_NETWORK"){
           popErrMsg("Connectivity to the server has been lost");
         } else {
-          popErrMsg(`Failed to delete '${target.name}' from server!`)
+          popErrMsg(`Failed to delete '${target.name}': ${error.message}`)
         }
         console.error(error);
       })
