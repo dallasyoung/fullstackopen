@@ -53,6 +53,7 @@ app.get("/api/persons", (_, res, next) => {
         .catch(error => next(error));
 });
 
+// Whoops, already took care of this
 app.get("/api/persons/:id", (req, res, next) => {
     Person
         .findById(req.params.id)
@@ -87,6 +88,7 @@ app.put("/api/persons/:id", (req, res, next) => {
         .catch(error => next(error));
 });
 
+// Whoops, already took care of this
 app.get("/info", (_, res, next) => {
     Person
         .find({})
