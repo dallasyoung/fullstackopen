@@ -35,4 +35,5 @@ Available on [Github](https://github.com/dallasyoung/fullstackopen)
 
 ## Live service
 
-Per exercise 3.10 & 3.11, this backend has been deployed as a live service to [render.com](https://dallasyoung-fullstackopen-part3.onrender.com)
+Per exercise 3.10, 3.11, and 3.21, this backend has been deployed as a live service to
+[render.com](https://dallasyoung-fullstackopen-part3-phonebook.onrender.com/)
