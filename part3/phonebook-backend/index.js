@@ -19,14 +19,23 @@ const morganShim = (req, res, next) => {
 };
 app.use(morganShim);
 
-app.post("/api/persons", (req, res, next) => {
+app.post("/api/persons", async (req, res, next) => {
+    // This took WAY too long to do ...
     if(!req.body.name || !req.body.number) {
-        return res
-            .status(400)
-            .json({
-                error: "missing content"
-            });
+        return next({name: "MissingContentError"});
     }
+
+    let nameError = await Person
+        .find({name: req.body.name})
+        .then((people) => people.length > 0 ? { name: "NameAlreadyExistsError"} : null)
+        .catch(error => next(error));
+    if(nameError) { return next(nameError); }
+    let numberError = await Person
+        .find({number: req.body.number})
+        .then((people) => people.length > 0 ? { name: "NumberAlreadyExistsError"} : null)
+        .catch(error => next(error));
+    if(numberError) { return next(numberError); }
+    
     let newPerson = new Person({
         name: req.body.name,
         number: req.body.number,
@@ -64,6 +73,20 @@ app.delete("/api/persons/:id", (req, res, next) => {
         .catch(error => next(error));
 });
 
+app.put("/api/persons/:id", (req, res, next) => {
+    if(!req.body.name || !req.body.number) {
+        return res
+            .status(400)
+            .json({
+                error: "missing content"
+            });
+    }
+    Person
+        .findByIdAndUpdate(req.params.id, {name: req.body.name, number: req.body.number}, {new: true})
+        .then(updatedPerson => res.json(updatedPerson))
+        .catch(error => next(error));
+});
+
 app.get("/info", (_, res, next) => {
     Person
         .find({})
@@ -77,7 +100,16 @@ app.get("/info", (_, res, next) => {
 
 const errorHandler = (error, req, res, next) => {
     if(error.name === "CastError") {
-        return res.json({ error: "Malformed person ID" });
+        return res.status(400).json({ error: "Malformed person ID" });
+    }
+    if(error.name === "MissingContentError") {
+        return res.status(400).json({ error: "Missing content"});
+    }
+    if(error.name === "NameAlreadyExistsError") {
+        return res.status(400).json({ error: "User already exists" });
+    }
+    if(error.name === "NumberAlreadyExistsError") {
+        return res.status(400).json({ error: "Number already exists" });
     }
    
     console.error(error);
