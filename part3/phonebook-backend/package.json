@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon -L index.js",
-    "build:ui": "echo 'I\\'m not implementing this script because of the mounted Docker setup I\\'ve been using throughout this course. This seems like kind of a not-ideal way to be doing this, but if this is something we will continue to do throughout the course, I will implement something equivalent in \\`/tools/scripts\\` or something. For now I\\'ll just be copying build folders by hand"
+    "build:ui": "echo 'I\\'m not implementing this script because of the mounted Docker setup I\\'ve been using throughout this course. This seems like kind of a not-ideal way to be doing this, but if this is something we will continue to do throughout the course, I will implement something equivalent in \\`/tools/scripts\\` or something. For now I\\'ll just be copying build folders by hand",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "eslint": "^8.46.0",
     "nodemon": "^3.0.1"
   }
 }
