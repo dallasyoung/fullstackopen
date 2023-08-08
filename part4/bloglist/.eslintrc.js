@@ -24,5 +24,7 @@ module.exports = {
     "rules": {
         "semi": [ "error", "always" ],
         "no-unused-vars": ["error", "all"],
+        "quotes": ["error", "double"],
+        "indent": ["error", 4]
     }
 };
