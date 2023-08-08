@@ -1,0 +1,26 @@
+{
+  "name": "bloglist",
+  "version": "0.0.1",
+  "description": "My implementation of [FullstackOpen's part4 exercise 'Blog List'](https://fullstackopen.com/en/part4/structure_of_backend_application_introduction_to_testing#exercises-4-1-4-2)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon -L index.js",
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dallasyoung/fullstackopen.git"
+  },
+  "author": "Dallas Young <dallasyoung@outlook.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dallasyoung/fullstackopen/issues"
+  },
+  "homepage": "https://github.com/dallasyoung/fullstackopen#readme",
+  "devDependencies": {
+    "eslint": "^8.46.0",
+    "nodemon": "^3.0.1"
+  }
+}
