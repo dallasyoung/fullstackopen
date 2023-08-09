@@ -5,27 +5,46 @@ const totalLikes = (blogs) => blogs.reduce((count, blog) => count + blog.likes, 
 
 const favoriteBlog = (blogs) => blogs.reduce((prev, current) => current.likes > prev.likes ? current : prev);
 
-// todo: learn to rewrite this test as suggested with `LoDash`
-const mostBlogs = (blogs) => {
-    const authors = blogs
+// todo: learn to rewrite these tests as suggested with `LoDash`
+const groupBlogsByAuthor = (blogs) => {
+    return blogs
         .map(b => b.author.toLowerCase())
-        .reduce((list, author) => list.includes(author) ? list : list.concat(author), []);
-
-    const stats = authors
+        .reduce((list, author) => list.includes(author) ? list : list.concat(author), [])
         .map(author => {
-            const count = blogs
-                .filter(b => b.author.toLowerCase() === author)
-                .length;
-            return { author, blogs: count };
+            const filteredBlogs = blogs.filter(b => b.author.toLowerCase() === author);
+            return { author, blogs: filteredBlogs };
         });
+};
 
-    return stats
-        .reduce((prev, current) => current.blogs > prev.blogs ? current : prev, { author: "no one", blogs: 0 });
+const getGroupedAuthorStats = (blogs) => {
+    const authors = groupBlogsByAuthor(blogs);
+    return authors.map(author => {
+        return {
+            author: author.author,
+            blogs: author.blogs.length,
+            likes: author.blogs.reduce((count, blog) => count + blog.likes, 0)
+        };
+    });
+};
+
+const noOne = { author: "no one", blogs: 0, likes: 0 };
+
+const mostBlogs = (blogs) => {
+    const stats = getGroupedAuthorStats(blogs);
+    const author = stats.reduce((prev, current) => current.blogs > prev.blogs ? current : prev, noOne);
+    return { author: author.author, blogs: author.blogs };
+};
+
+const mostLikes = (blogs) => {
+    const stats = getGroupedAuthorStats(blogs);
+    const author = stats.reduce((prev, current) => current.likes > prev.likes ? current : prev, noOne);
+    return { author: author.author, likes: author.likes }; 
 };
 
 module.exports = {
     dummy,
     totalLikes,
     favoriteBlog,
-    mostBlogs
+    mostBlogs,
+    mostLikes
 };

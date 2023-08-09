@@ -185,3 +185,7 @@ describe("most blogs", () => {
     test("of multiple people is Edgar", () => expect(listHelper.mostBlogs(listOfPartialBlogs_EdsgerMostFrequent).author).toBe("edsger w. dijkstra"));
     test("of multiple people is Robert ", () => expect(listHelper.mostBlogs(listOfPartialBlogs_RobertMostFrequent).author).toBe("robert c. martin"));
 });
+
+describe("favorite author", () => {
+    test("has the most likes", () => expect(listHelper.mostLikes(listWithManyBlogs).likes).toBe(17));
+});
