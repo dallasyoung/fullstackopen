@@ -81,6 +81,83 @@ const listWithEquallyRatedBlogs = [
     }
 ];
 
+const listOfPartialBlogsByEdsger = [
+    {
+        title: "Go To Statement Considered Harmful",
+        author: "Edsger W. Dijkstra",
+    },
+    {
+        title: "Go To Statement Considered Harmful",
+        author: "Edsger W. Dijkstra",
+    },
+    {
+        title: "Go To Statement Considered Harmful",
+        author: "Edsger W. Dijkstra",
+    }
+];
+
+const listOfPartialBlogs_EdsgerMostFrequent = [
+    {
+        title: "Go To Statement Considered Harmful",
+        author: "Edsger W. Dijkstra",
+    },
+    {
+        title: "Go To Statement Considered Harmful",
+        author: "Edsger W. Dijkstra",
+    },
+    {
+        title: "Go To Statement Considered Harmful",
+        author: "Edsger W. Dijkstra",
+    },
+    {
+        title: "Type wars",
+        author: "Robert C. Martin",
+    },
+    {
+        title: "TDD harms architecture",
+        author: "Robert C. Martin",
+    },
+    {
+        title: "TDD harms architecture",
+        author: "Robert C. Martin",
+    }
+];
+
+const listOfPartialBlogs_RobertMostFrequent = [
+    {
+        title: "Go To Statement Considered Harmful",
+        author: "Edsger W. Dijkstra",
+    },
+    {
+        title: "Go To Statement Considered Harmful",
+        author: "Edsger W. Dijkstra",
+    },
+    {
+        title: "Go To Statement Considered Harmful",
+        author: "Edsger W. Dijkstra",
+    },
+    {
+        title: "Type wars",
+        author: "Robert C. Martin",
+    },
+    {
+        title: "TDD harms architecture",
+        author: "Robert C. Martin",
+    },
+    {
+        title: "TDD harms architecture",
+        author: "Robert C. Martin",
+    },
+    {
+        title: "Type wars",
+        author: "Robert C. Martin",
+    },
+    {
+        title: "TDD harms architecture",
+        author: "Robert C. Martin",
+    }
+];
+
 describe("dummy", () => {
     test("returns one", () => expect(listHelper.dummy([])).toBe(1));
 });
@@ -100,4 +177,11 @@ describe("favorite blog", () => {
         const expected = ["Go To Statement Considered Harmful", "Type wars"];
         expect(expected).toContain(listHelper.favoriteBlog(randomizedListWithEquallyRatedBlogs).title);
     });
+});
+
+describe("most blogs", () => {
+    test("of an empty array is no one", () => expect(listHelper.mostBlogs([]).author).toBe("no one"));
+    test("of one person is themselves", () => expect(listHelper.mostBlogs(listOfPartialBlogsByEdsger).author).toBe("edsger w. dijkstra"));
+    test("of multiple people is Edgar", () => expect(listHelper.mostBlogs(listOfPartialBlogs_EdsgerMostFrequent).author).toBe("edsger w. dijkstra"));
+    test("of multiple people is Robert ", () => expect(listHelper.mostBlogs(listOfPartialBlogs_RobertMostFrequent).author).toBe("robert c. martin"));
 });
